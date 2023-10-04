@@ -1,0 +1,14 @@
+
+###############################################################################
+
+	Text Adventure with some UI, contact@christopher-anderson.net
+
+	------------------------------
+		
+		License (CC0)
+	http://creativecommons.org/publicdomain/zero/1.0/
+
+You may use this barebones project however you like.
+
+
+###############################################################################
