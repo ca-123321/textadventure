@@ -15,5 +15,3 @@ SIDE_BOXES_WH = 210  # minimap/"look", images should be 200x200 giving a small b
 ROOM = 0
 DAY = 1
 VERBS = ['go', 'take', 'give', 'look', 'quit', 'change', 'wait']
-global TICK 
-TICK = 1

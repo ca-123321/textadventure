@@ -1,4 +1,4 @@
-import pygame  # Necessary?
+import pygame
 from constants import *
 import os.path
 
@@ -13,7 +13,7 @@ def parse(text):
             case 'quit':
                 success = True
                 pygame.quit()
-                exit()  # sys.exit()
+                exit()
             case 'change':
                 # map_pic = pygame.image.load(os.path.join('graphics/maps', '00.jpg'))
                 print("Should change the map")
@@ -34,7 +34,4 @@ def parse(text):
     else:
         print("Use a verb from verbs")
 
-    # if text in pygame.colordict.THECOLORS:
-    #     print("That's a color!")
-    #TICK += 1
     return (success, action, time_passed)

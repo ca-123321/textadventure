@@ -3,7 +3,6 @@ import pygame
 from constants import *
 from parsing import *
 from sys import exit
-# from pathlib import Path  # No real need to use pathlib at this point
 import os.path
 import math
 
@@ -33,7 +32,6 @@ flower_x_pos = 10
 flower_y_pos = 30
 flower_speed = 2
 
-# Fills all here?  Seems fine
 # screen.fill('cornsilk3')
 input_text_area.fill('antiquewhite4')
 output_text_area.fill('darkcyan')
@@ -44,13 +42,12 @@ bottomright_area.fill('goldenrod3')
 # input marker
 input_marker = my_font.render(">", True, 'black')
 
-
 # User input
 textinput = pygame_textinput.TextInputVisualizer()
 lastinput = ""
 
 # Images
-news_pic = pygame.image.load(os.path.join('graphics/other', 'initial_look.jpg')).convert()
+look_pic = pygame.image.load(os.path.join('graphics/other', 'initial_look.jpg')).convert()
 map_pic = pygame.image.load(os.path.join('graphics/maps', 'initial_map.jpg')).convert()
 daynight = pygame.image.load(os.path.join('graphics/other/time', 'day_cycle.png')).convert()
 
@@ -61,8 +58,8 @@ tiles = math.ceil((OUTPUT_W / daynight_width)) + 1
 scroll = 0
 daynight_rect = daynight.get_rect(topleft=(scroll, OUTPUT_H-50))
 
-player_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
-player_rect = player_surf.get_rect(midbottom = (50,370))
+castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
+castle_rect = castle_surf.get_rect(midbottom = (50,370))
 
 while True:
     events = pygame.event.get()
@@ -81,7 +78,7 @@ while True:
     flower_y_pos += flower_speed
     
     # into specific areas
-    picframe_area.blit(news_pic, (5,5))
+    picframe_area.blit(look_pic, (5,5))
     # Doesn't work, but expected it to... No picture, just the red picframe bg
     # picframe_area.blit(news_pic, picframe_rect.center)
     minimap_area.blit(map_pic, (5,5))
@@ -94,10 +91,7 @@ while True:
         daynight_rect.x = i*daynight_width + scroll
         output_text_area.blit(daynight, daynight_rect)
 
-    # if abs(scroll) > daynight_width:
-    #     scroll = 0
-
-    output_text_area.blit(player_surf, player_rect)
+    output_text_area.blit(castle_surf, castle_rect)
 
     for event in events:
         if event.type == pygame.QUIT:
@@ -113,4 +107,4 @@ while True:
             textinput.value = ""
 
     pygame.display.update()
-    clock.tick(60)  # max 60fps
+    clock.tick(60)
