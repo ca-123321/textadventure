@@ -11,7 +11,7 @@ pygame.init()
 pygame.display.set_caption('Text Adventure Someday')
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-my_font = pygame.font.Font('font/Molengo-Regular.ttf', 40)
+font_general = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
 pygame.key.set_repeat(200, 25)
 
@@ -42,7 +42,7 @@ picframe_area.fill('firebrick2')
 bottomright_area.fill('goldenrod3')
 
 # input marker
-input_marker = my_font.render(">", True, 'black')
+input_marker = font_general.render(">", True, 'black')
 
 # User input
 textinput = pygame_textinput.TextInputVisualizer()
@@ -101,12 +101,14 @@ while True:
             pygame.quit()
             exit()  # sys.exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            output_text_area.fill('darkcyan')
             lastinput = textinput.value
             turn = parse(textinput.value)
             if turn[0] == True and turn[1] == 'wait':   # change returning success to try/exception
                 scroll -= turn[2]
                 if abs(scroll) > daynight_width:
                     scroll = 0
+            output_text_area.blit(font_general.render(lastinput, True, 'black'), (0,0))
             textinput.value = ""
         if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
             textinput.value = "go "
