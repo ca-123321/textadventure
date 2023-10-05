@@ -1,0 +1,7 @@
+- ~~change this to markdown~~
+- establish maybe 3 different sizes that use scaling after hitting some threshold
+- set fontsize appropriately
+- have a 3rd and 4th sidebox
+- Make a day counter
+- Make a visual display of day separator on daynight image
+- develop parser

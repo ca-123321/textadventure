@@ -23,7 +23,7 @@ minimap_rect = minimap_area.get_rect(center = (
 picframe_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
 picframe_rect = picframe_area.get_rect(center = (
     WIDTH - CUSHION_RIGHT - SIDE_BOXES_WH//2, CUSHION_TOP + OUTPUT_H//4 * 3))
-bottomright_area = pygame.Surface((150, 100))
+bottomright_area = pygame.Surface((SIDE_BOXES_WH, 100))
 bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_RIGHT, HEIGHT - CUSHION_BOTTOM))
 
 # trying animation
