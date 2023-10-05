@@ -45,7 +45,8 @@ bottomright_area.fill('goldenrod3')
 input_marker = font_general.render(">", True, 'black')
 
 # User input
-textinput = pygame_textinput.TextInputVisualizer()
+manager = pygame_textinput.TextInputManager()
+textinput = pygame_textinput.TextInputVisualizer(manager=manager)
 lastinput = ""
 
 # Images
@@ -112,6 +113,8 @@ while True:
             textinput.value = ""
         if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
             textinput.value = "go "
+            print(manager.cursor_pos)
+            manager.cursor_pos = len(textinput.value)
 
     pygame.display.update()
     clock.tick(60)
