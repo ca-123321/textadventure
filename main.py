@@ -5,6 +5,7 @@ from parsing import *
 from sys import exit
 # from pathlib import Path  # No real need to use pathlib at this point
 import os.path
+import math
 
 # init stuff
 pygame.init()
@@ -52,9 +53,13 @@ lastinput = ""
 news_pic = pygame.image.load(os.path.join('graphics/other', 'initial_look.jpg')).convert()
 map_pic = pygame.image.load(os.path.join('graphics/maps', 'initial_map.jpg')).convert()
 daynight = pygame.image.load(os.path.join('graphics/other/time', 'day_cycle.png')).convert()
-daynight_x_pos = 0
-daynight_rect = daynight.get_rect(topleft=(daynight_x_pos, OUTPUT_H-50))
 
+
+# daynight scrolling
+daynight_width = daynight.get_width()
+tiles = math.ceil((OUTPUT_W / daynight_width)) + 1
+scroll = 0
+daynight_rect = daynight.get_rect(topleft=(scroll, OUTPUT_H-50))
 
 player_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
 player_rect = player_surf.get_rect(midbottom = (50,370))
@@ -83,7 +88,14 @@ while True:
     input_text_area.fill('antiquewhite4')  # need to refill the input bg here
     input_text_area.blit(input_marker, (5,5))
     input_text_area.blit(textinput.surface, (50, 25))
-    output_text_area.blit(daynight, daynight_rect)
+    
+    # Daynight scrolling inside output_text_area
+    for i in range(tiles):
+        daynight_rect.x = i*daynight_width + scroll
+        output_text_area.blit(daynight, daynight_rect)
+
+    # if abs(scroll) > daynight_width:
+    #     scroll = 0
 
     output_text_area.blit(player_surf, player_rect)
 
@@ -95,7 +107,9 @@ while True:
             lastinput = textinput.value
             turn = parse(textinput.value)
             if turn[0] == True and turn[1] == 'wait':   # change returning success to try/exception
-                daynight_rect.x -= turn[2]
+                scroll -= turn[2]
+                if abs(scroll) > daynight_width:
+                    scroll = 0
             textinput.value = ""
 
     pygame.display.update()
