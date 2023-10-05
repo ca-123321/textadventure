@@ -5,3 +5,4 @@
 - Make a day counter
 - Make a visual display of day separator on daynight image
 - develop parser
+- get the daynight image out of outputarea

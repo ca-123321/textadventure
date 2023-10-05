@@ -12,6 +12,8 @@ pygame.display.set_caption('Text Adventure Someday')
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 my_font = pygame.font.Font('font/Molengo-Regular.ttf', 40)
+pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
+pygame.key.set_repeat(200, 25)
 
 output_text_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
 output_rect = output_text_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_TOP))
@@ -59,11 +61,12 @@ scroll = 0
 daynight_rect = daynight.get_rect(topleft=(scroll, OUTPUT_H-50))
 
 castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
-castle_rect = castle_surf.get_rect(midbottom = (50,370))
+castle_rect = castle_surf.get_rect(midbottom = (50, OUTPUT_H - 50))
 
 while True:
     events = pygame.event.get()
     textinput.update(events)
+    mouse_pos = pygame.mouse.get_pos()
     screen.fill('cornsilk3')
     
     # onto background
@@ -105,6 +108,8 @@ while True:
                 if abs(scroll) > daynight_width:
                     scroll = 0
             textinput.value = ""
+        if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
+            textinput.value = "go "
 
     pygame.display.update()
     clock.tick(60)

@@ -1,5 +1,5 @@
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 800
+HEIGHT = 700
 # INPUT_W = 500        # Input area width
 INPUT_H = 70         # Input area height
 SIDE_BOXES_WH = 210  # minimap/"look", images should be 200x200 giving a small border
