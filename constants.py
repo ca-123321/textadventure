@@ -25,6 +25,15 @@ INPUT_W_MIN = 300
 assert HEIGHT >= 600
 assert WIDTH >= 600
 
+# Colors
+INPUT_BG = '#505050'
+SCREEN_BG = '#cdc8b1'
+OUTPUT_BG = '#008b8b'
+BOTTOMRIGHT_BG = '#cd9b1d'
+BLACK = '#000000'
+MINIMAP_BG = '#698b69'
+PICFRAME_BG = '#ee2c2c'
+
 ROOM = 0
 DAY = 1
 VERBS = ['go', 'take', 'give', 'look', 'quit', 'change', 'wait']

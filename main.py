@@ -12,7 +12,6 @@ pygame.display.set_caption('Text Adventure Someday')
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 font_general = pygame.font.Font('font/Molengo-Regular.ttf', 40)
-pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
 pygame.key.set_repeat(200, 25)
 
 output_text_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
@@ -35,14 +34,14 @@ flower_y_pos = 30
 flower_speed = 2
 
 # screen.fill('cornsilk3')
-input_text_area.fill('antiquewhite4')
-output_text_area.fill('darkcyan')
-minimap_area.fill('darkseagreen4')
-picframe_area.fill('firebrick2')
-bottomright_area.fill('goldenrod3')
+input_text_area.fill(INPUT_BG)
+output_text_area.fill(OUTPUT_BG)
+minimap_area.fill(MINIMAP_BG)
+picframe_area.fill(PICFRAME_BG)
+bottomright_area.fill(BOTTOMRIGHT_BG)
 
 # input marker
-input_marker = font_general.render(">", True, 'black')
+input_marker = font_general.render(">", True, BLACK)
 
 # User input
 manager = pygame_textinput.TextInputManager()
@@ -68,8 +67,14 @@ while True:
     events = pygame.event.get()
     textinput.update(events)
     mouse_pos = pygame.mouse.get_pos()
-    screen.fill('cornsilk3')
-    
+    screen.fill(SCREEN_BG)
+    if input_text_rect.collidepoint(mouse_pos):
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_IBEAM)
+    elif bottomright_rect.collidepoint(mouse_pos):
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+    else:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
+
     # onto background
     screen.blit(output_text_area, output_rect)
     screen.blit(input_text_area, input_text_rect)
@@ -86,7 +91,7 @@ while True:
     # Doesn't work, but expected it to... No picture, just the red picframe bg
     # picframe_area.blit(news_pic, picframe_rect.center)
     minimap_area.blit(map_pic, (5,5))
-    input_text_area.fill('antiquewhite4')  # need to refill the input bg here
+    input_text_area.fill(INPUT_BG)  # need to refill the input bg here
     input_text_area.blit(input_marker, (5,5))
     input_text_area.blit(textinput.surface, (50, 25))
     
@@ -102,7 +107,7 @@ while True:
             pygame.quit()
             exit()  # sys.exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            output_text_area.fill('darkcyan')
+            output_text_area.fill(OUTPUT_BG)
             lastinput = textinput.value
             successful = validate(lastinput)
             turn = parse(textinput.value)
@@ -110,7 +115,7 @@ while True:
                 scroll -= turn[2]
                 if abs(scroll) > daynight_width:
                     scroll = 0
-            output_text_area.blit(font_general.render(lastinput, True, 'black'), (0,0))
+            output_text_area.blit(font_general.render(lastinput, True, BLACK), (0,0))
             textinput.value = ""
         if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
             textinput.value = "go "
