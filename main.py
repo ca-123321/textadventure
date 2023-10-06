@@ -104,6 +104,7 @@ while True:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             output_text_area.fill('darkcyan')
             lastinput = textinput.value
+            successful = validate(lastinput)
             turn = parse(textinput.value)
             if turn[0] == True and turn[1] == 'wait':   # change returning success to try/exception
                 scroll -= turn[2]

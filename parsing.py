@@ -2,6 +2,10 @@ import pygame
 from constants import *
 import os.path
 
+def validate(text):
+    print("Seems ok")
+    return True
+
 def parse(text):
     success = False
     time_passed = 0
