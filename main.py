@@ -33,7 +33,7 @@ flower_x_pos = 10
 flower_y_pos = 30
 flower_speed = 2
 
-# screen.fill('cornsilk3')
+# Fills
 input_text_area.fill(INPUT_BG)
 output_text_area.fill(OUTPUT_BG)
 minimap_area.fill(MINIMAP_BG)
@@ -105,7 +105,7 @@ while True:
     for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()  # sys.exit()
+            exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             output_text_area.fill(OUTPUT_BG)
             lastinput = textinput.value
