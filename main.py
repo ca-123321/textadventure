@@ -15,17 +15,17 @@ font_general = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 pygame.key.set_repeat(200, 25)
 
 output_text_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
-output_rect = output_text_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_TOP))
+output_rect = output_text_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_SMALL))
 input_text_area = pygame.Surface((INPUT_W, INPUT_H))
-input_text_rect = input_text_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_BOTTOM))
+input_text_rect = input_text_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
 minimap_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
 minimap_rect = minimap_area.get_rect(center = (
-    WIDTH - CUSHION_RIGHT - SIDE_BOXES_WH//2, CUSHION_TOP + OUTPUT_H//4))
+    WIDTH - CUSHION_SMALL - SIDE_BOXES_WH//2, CUSHION_SMALL + OUTPUT_H//4))
 picframe_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
 picframe_rect = picframe_area.get_rect(center = (
-    WIDTH - CUSHION_RIGHT - SIDE_BOXES_WH//2, CUSHION_TOP + OUTPUT_H//4 * 3))
+    WIDTH - CUSHION_SMALL - SIDE_BOXES_WH//2, CUSHION_SMALL + OUTPUT_H//4 * 3))
 bottomright_area = pygame.Surface((SIDE_BOXES_WH, 100))
-bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_RIGHT, HEIGHT - CUSHION_BOTTOM))
+bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_SMALL, HEIGHT - CUSHION_SMALL))
 
 # trying animation
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
