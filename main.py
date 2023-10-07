@@ -76,6 +76,16 @@ cal_daynight_rect = daynight.get_rect(topleft=(scroll, 0))
 castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
 castle_rect = castle_surf.get_rect(midbottom = (50, OUTPUT_H))
 
+# Display some entities for testing
+print_text('goblin', font_output, midbox1_area, 0)
+print_text('spooky ghost', font_output, midbox1_area, 1)
+print_text('angry snail', font_output, midbox1_area, 2)
+
+# Display some actions for testing, the whole area clicked puts "go " into input for now
+print_text('Go', font_output, bottomright_area, 0)
+print_text('Look', font_output, bottomright_area, 1)
+print_text('Take', font_output, bottomright_area, 2)
+
 while True:
     events = pygame.event.get()
     textinput.update(events)
