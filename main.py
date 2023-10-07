@@ -115,6 +115,9 @@ while True:
     screen.blit(flower_surface, (flower_x_pos, flower_y_pos))
     if flower_y_pos > 200 or flower_y_pos < 30:
         flower_speed *= -1
+        scroll -= 50
+        if abs(scroll) > daynight_width:
+            scroll = 0
     flower_y_pos += flower_speed
     
     # Rendering into specific areas
