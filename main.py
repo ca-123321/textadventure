@@ -15,6 +15,7 @@ clock = pygame.time.Clock()
 font_input = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 font_output = pygame.font.Font('font/Molengo-Regular.ttf', 20)
 pygame.key.set_repeat(200, 25)
+output_line = 0 # set first output at the top of output area
 
 # UI Areas and rects
 output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
@@ -43,6 +44,7 @@ sidebox_mid_area.fill(BLACK)
 sidebox_bottom_area.fill(BLACK)
 midbox1_area.fill('lightgray')
 bottomright_area.fill(BOTTOMRIGHT_BG)
+output_area.fill(OUTPUT_BG)
 
 # Side animation playing
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
@@ -55,6 +57,7 @@ input_marker = font_input.render(">", True, BLACK)
 manager = pygame_textinput.TextInputManager()
 textinput = pygame_textinput.TextInputVisualizer(manager=manager)
 lastinput = ""
+command_history = []
 
 # Images
 look_pic = pygame.image.load(os.path.join('graphics/other', 'initial_look.jpg')).convert()
@@ -118,7 +121,7 @@ while True:
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            output_area.fill(OUTPUT_BG)
+            output_area.fill(OUTPUT_BG)  # will eventually want to store history and use this again
             lastinput = textinput.value
             #successful = validate(lastinput)
             # while successful: ... 
@@ -127,11 +130,21 @@ while True:
                 scroll -= turn[2]
                 if abs(scroll) > daynight_width:
                     scroll = 0
-            print_text("> " + lastinput, font_output, output_area, 0)
-            print_text(f"The result of the command {lastinput}", font_output, output_area, 1)
-            print_text("goblin", font_output, midbox1_area, 0)
-            print_text("human", font_output, midbox1_area, 1)
-            print_text("spooky ghost", font_output, midbox1_area, 2)
+            if len(command_history) == 18:
+                command_history.pop(0)
+                command_history.pop(0)
+            command_history.append('> ' + lastinput)
+            command_history.append(f'The result of the command {lastinput}')
+            for l in range(len(command_history)):
+                print_text(command_history[l], font_output, output_area, l)
+            # print_text("> " + lastinput, font_output, output_area, output_line)
+            # print_text(f"The result of the command {lastinput}", font_output, output_area, output_line + 1)
+            output_line += 2
+            print(command_history)
+            #  Want to refresh fill and print by room, but this generally works
+            # print_text("goblin", font_output, midbox1_area, 0)
+            # print_text("human", font_output, midbox1_area, 1)
+            # print_text("spooky ghost", font_output, midbox1_area, 2)
             textinput.value = ""
         if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
             textinput.value = "go "
