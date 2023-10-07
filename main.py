@@ -20,6 +20,8 @@ output_line = 0 # set first output at the top of output area
 # UI Areas and rects
 output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
 output_rect = output_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_SMALL))
+cal_area = pygame.Surface((OUTPUT_W, 50))
+cal_rect = cal_area.get_rect(topleft = output_rect.bottomleft)
 input_area = pygame.Surface((INPUT_W, INPUT_H))
 input_text_rect = input_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
 midbox1_area = pygame.Surface((150, 300))
@@ -68,11 +70,11 @@ daynight = pygame.image.load(os.path.join('graphics/other/time', 'day_cycle.png'
 daynight_width = daynight.get_width()
 tiles = math.ceil((OUTPUT_W / daynight_width)) + 1
 scroll = 0
-daynight_rect = daynight.get_rect(topleft=(scroll, OUTPUT_H-50))
+cal_daynight_rect = daynight.get_rect(topleft=(scroll, 0))
 
-# Castle image, just for experimenting, maybe will be decoration reflecting the current room/zone/weather
+# Castle image, placeholder for showing area/zone/etc mini display
 castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
-castle_rect = castle_surf.get_rect(midbottom = (50, OUTPUT_H - 50))
+castle_rect = castle_surf.get_rect(midbottom = (50, OUTPUT_H))
 
 while True:
     events = pygame.event.get()
@@ -88,6 +90,7 @@ while True:
 
     # Background rendering
     screen.blit(output_area, output_rect)
+    screen.blit(cal_area, cal_rect)
     screen.blit(input_area, input_text_rect)
     screen.blit(sidebox1_area, sidebox1_rect)
     screen.blit(sidebox2_area, sidebox2_rect)
@@ -109,10 +112,11 @@ while True:
     input_area.blit(input_marker, (5,10))
     input_area.blit(textinput.surface, (50, 25))
     
-    # Daynight scrolling inside output_text_area
+    # Daynight scrolling inside cal_daynight_rect .... OOF, probably could be cleaned up
+    # Maybe subsurface
     for i in range(tiles):
-        daynight_rect.x = i*daynight_width + scroll
-        output_area.blit(daynight, daynight_rect)
+        cal_daynight_rect.x = i*daynight_width + scroll
+        cal_area.blit(daynight, cal_daynight_rect)
 
     output_area.blit(castle_surf, castle_rect)
 
@@ -121,7 +125,7 @@ while True:
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            output_area.fill(OUTPUT_BG)  # will eventually want to store history and use this again
+            output_area.fill(OUTPUT_BG)
             lastinput = textinput.value
             #successful = validate(lastinput)
             # while successful: ... 
@@ -137,11 +141,10 @@ while True:
             command_history.append(f'The result of the command {lastinput}')
             for l in range(len(command_history)):
                 print_text(command_history[l], font_output, output_area, l)
-            # print_text("> " + lastinput, font_output, output_area, output_line)
-            # print_text(f"The result of the command {lastinput}", font_output, output_area, output_line + 1)
+    
             output_line += 2
-            print(command_history)
-            #  Want to refresh fill and print by room, but this generally works
+            
+            #  Want to refresh fill and print on room change, but this generally works
             # print_text("goblin", font_output, midbox1_area, 0)
             # print_text("human", font_output, midbox1_area, 1)
             # print_text("spooky ghost", font_output, midbox1_area, 2)
