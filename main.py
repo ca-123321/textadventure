@@ -20,8 +20,10 @@ output_line = 0 # set first output at the top of output area
 # UI Areas and rects
 output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
 output_rect = output_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_SMALL))
+zone_context_area = pygame.Surface((OUTPUT_W, 100))
+zone_context_rect = zone_context_area.get_rect(topleft = output_rect.bottomleft)
 cal_area = pygame.Surface((OUTPUT_W, 50))
-cal_rect = cal_area.get_rect(topleft = output_rect.bottomleft)
+cal_rect = cal_area.get_rect(topleft = zone_context_rect.bottomleft)
 input_area = pygame.Surface((INPUT_W, INPUT_H))
 input_text_rect = input_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
 midbox1_area = pygame.Surface((150, 300))
@@ -47,6 +49,7 @@ sidebox_bottom_area.fill(BLACK)
 midbox1_area.fill('lightgray')
 bottomright_area.fill(BOTTOMRIGHT_BG)
 output_area.fill(OUTPUT_BG)
+zone_context_area.fill('aquamarine3')
 
 # Side animation playing
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
@@ -74,7 +77,7 @@ cal_daynight_rect = daynight.get_rect(topleft=(scroll, 0))
 
 # Castle image, placeholder for showing area/zone/etc mini display
 castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png')).convert_alpha()
-castle_rect = castle_surf.get_rect(midbottom = (50, OUTPUT_H))
+castle_rect = castle_surf.get_rect(topleft = (0,0))
 
 # Display some entities for testing
 print_text('goblin', font_output, midbox1_area, 0)
@@ -101,6 +104,7 @@ while True:
     # Background rendering
     screen.blit(output_area, output_rect)
     screen.blit(cal_area, cal_rect)
+    screen.blit(zone_context_area, zone_context_rect)
     screen.blit(input_area, input_text_rect)
     screen.blit(sidebox1_area, sidebox1_rect)
     screen.blit(sidebox2_area, sidebox2_rect)
@@ -128,7 +132,7 @@ while True:
         cal_daynight_rect.x = i*daynight_width + scroll
         cal_area.blit(daynight, cal_daynight_rect)
 
-    output_area.blit(castle_surf, castle_rect)
+    zone_context_area.blit(castle_surf, castle_rect)
 
     for event in events:
         if event.type == pygame.QUIT:
