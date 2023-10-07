@@ -21,9 +21,9 @@ output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
 output_rect = output_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_SMALL))
 input_area = pygame.Surface((INPUT_W, INPUT_H))
 input_text_rect = input_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
-# middle_list = pygame.Surface(())
+midbox1_area = pygame.Surface((150, 300))
+midbox1_rect = midbox1_area.get_rect(topleft = (output_rect.topright[0]+30, CUSHION_SMALL))
 sidebox1_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
-#sidebox1_rect = sidebox1_area.get_rect(topleft = (output_rect.topright[0]+10, output_rect.topright[1]))
 sidebox1_rect = sidebox1_area.get_rect(topright = (WIDTH - CUSHION_SMALL, CUSHION_SMALL))
 sidebox_mid_area = pygame.Surface((SIDE_BOXES_WH, 40))
 sidebox_mid_rect = sidebox_mid_area.get_rect(topleft = sidebox1_rect.bottomleft)
@@ -41,6 +41,7 @@ sidebox1_area.fill(SIDEBOX1_BG)
 sidebox2_area.fill(SIDEBOX2_BG)
 sidebox_mid_area.fill(BLACK)
 sidebox_bottom_area.fill(BLACK)
+midbox1_area.fill('lightgray')
 bottomright_area.fill(BOTTOMRIGHT_BG)
 
 # Side animation playing
@@ -89,6 +90,7 @@ while True:
     screen.blit(sidebox2_area, sidebox2_rect)
     screen.blit(sidebox_mid_area, sidebox_mid_rect)
     screen.blit(sidebox_bottom_area, sidebox_bottom_rect)
+    screen.blit(midbox1_area, midbox1_rect)
     screen.blit(bottomright_area, bottomright_rect)
     screen.blit(flower_surface, (flower_x_pos, flower_y_pos))
     if flower_y_pos > 200 or flower_y_pos < 30:
@@ -125,7 +127,11 @@ while True:
                 scroll -= turn[2]
                 if abs(scroll) > daynight_width:
                     scroll = 0
-            print_text(lastinput, font_output, output_area)
+            print_text("> " + lastinput, font_output, output_area, 0)
+            print_text(f"The result of the command {lastinput}", font_output, output_area, 1)
+            print_text("goblin", font_output, midbox1_area, 0)
+            print_text("human", font_output, midbox1_area, 1)
+            print_text("spooky ghost", font_output, midbox1_area, 2)
             textinput.value = ""
         if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
             textinput.value = "go "
