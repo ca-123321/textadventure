@@ -16,6 +16,7 @@ font_input = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 font_output = pygame.font.Font('font/Molengo-Regular.ttf', 20)
 pygame.key.set_repeat(200, 25)
 output_line = 0 # set first output at the top of output area
+day = 1
 
 # UI Areas and rects
 output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
@@ -24,6 +25,8 @@ zone_context_area = pygame.Surface((OUTPUT_W, 100))
 zone_context_rect = zone_context_area.get_rect(topleft = output_rect.bottomleft)
 cal_area = pygame.Surface((OUTPUT_W, 50))
 cal_rect = cal_area.get_rect(topleft = zone_context_rect.bottomleft)
+status_area = pygame.Surface((OUTPUT_W, 50))
+status_rect = status_area.get_rect(topleft = (cal_rect.bottomleft))
 input_area = pygame.Surface((INPUT_W, INPUT_H))
 input_text_rect = input_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
 midbox1_area = pygame.Surface((150, 300))
@@ -50,6 +53,7 @@ midbox1_area.fill('lightgray')
 bottomright_area.fill(BOTTOMRIGHT_BG)
 output_area.fill(OUTPUT_BG)
 zone_context_area.fill('aquamarine3')
+status_area.fill('bisque3')
 
 # Side animation playing
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
@@ -94,6 +98,7 @@ while True:
     textinput.update(events)
     mouse_pos = pygame.mouse.get_pos()
     screen.fill(SCREEN_BG)
+    
     if input_text_rect.collidepoint(mouse_pos):
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_IBEAM)
     elif bottomright_rect.collidepoint(mouse_pos):
@@ -105,6 +110,7 @@ while True:
     screen.blit(output_area, output_rect)
     screen.blit(cal_area, cal_rect)
     screen.blit(zone_context_area, zone_context_rect)
+    screen.blit(status_area, status_rect)
     screen.blit(input_area, input_text_rect)
     screen.blit(sidebox1_area, sidebox1_rect)
     screen.blit(sidebox2_area, sidebox2_rect)
@@ -118,6 +124,8 @@ while True:
         scroll -= 50
         if abs(scroll) > daynight_width:
             scroll = 0
+            status_area.fill('bisque3')
+            day += 1
     flower_y_pos += flower_speed
     
     # Rendering into specific areas
@@ -128,7 +136,7 @@ while True:
     input_area.fill(INPUT_BG)  # need to refill the input bg here
     input_area.blit(input_marker, (5,10))
     input_area.blit(textinput.surface, (50, 25))
-    
+    status_area.blit(font_input.render("Day " + str(day), True, BLACK), (0,0))
     # Daynight scrolling inside cal_daynight_rect .... OOF, probably could be cleaned up
     # Maybe subsurface
     for i in range(tiles):

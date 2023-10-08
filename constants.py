@@ -23,5 +23,4 @@ SIDEBOX1_BG = '#698b69'
 SIDEBOX2_BG = '#ee2c2c'
 
 ROOM = 0
-DAY = 1
 VERBS = ['go', 'take', 'give', 'look', 'quit', 'change', 'wait']
