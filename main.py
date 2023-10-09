@@ -160,12 +160,14 @@ while True:
                 scroll -= turn[2]
                 if abs(scroll) > daynight_width:
                     scroll = 0
-            if len(command_history) == 18:
-                command_history.pop(0)
-                command_history.pop(0)
+
             command_history.append('> ' + lastinput)
             example_result = "This is a long sentence that should be broken up. Let's try breaking it up and hope that words are preserved."
             command_history.extend(break_up_line(example_result, 45))
+            # Trim command_history to fit in output area
+            while len(command_history) > 18:
+                command_history.pop(0)
+            # blit the command history to the output
             for l in range(len(command_history)):
                 print_text(command_history[l], font_output, output_area, l)
     
