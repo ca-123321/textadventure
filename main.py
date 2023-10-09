@@ -53,7 +53,7 @@ midbox1_area.fill('lightgray')
 bottomright_area.fill(BOTTOMRIGHT_BG)
 output_area.fill(OUTPUT_BG)
 zone_context_area.fill('aquamarine3')
-status_area.fill('bisque3')
+# status_area.fill('bisque3')
 
 # Side animation playing
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
@@ -124,7 +124,7 @@ while True:
         scroll -= 50
         if abs(scroll) > daynight_width:
             scroll = 0
-            status_area.fill('bisque3')
+            # status_area.fill('bisque3')
             day += 1
     flower_y_pos += flower_speed
     
@@ -136,7 +136,8 @@ while True:
     input_area.fill(INPUT_BG)  # need to refill the input bg here
     input_area.blit(input_marker, (5,10))
     input_area.blit(textinput.surface, (50, 25))
-    status_area.blit(font_input.render("Day " + str(day), True, BLACK), (0,0))
+    status_area.fill('bisque3')
+    status_area.blit(font_output.render("Day " + str(day), True, BLACK), (0,0))
     # Daynight scrolling inside cal_daynight_rect .... OOF, probably could be cleaned up
     # Maybe subsurface
     for i in range(tiles):
@@ -163,7 +164,8 @@ while True:
                 command_history.pop(0)
                 command_history.pop(0)
             command_history.append('> ' + lastinput)
-            command_history.append(f'The result of the command {lastinput}')
+            example_result = "This is a long sentence that should be broken up. Let's try breaking it up and hope that words are preserved."
+            command_history.extend(break_up_line(example_result, 45))
             for l in range(len(command_history)):
                 print_text(command_history[l], font_output, output_area, l)
     
