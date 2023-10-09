@@ -15,13 +15,12 @@ clock = pygame.time.Clock()
 font_input = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 font_output = pygame.font.Font('font/Molengo-Regular.ttf', 20)
 pygame.key.set_repeat(200, 25)
-output_line = 0 # set first output at the top of output area
 day = 1
 
 # UI Areas and rects
 output_area = pygame.Surface((OUTPUT_W, OUTPUT_H))
 output_rect = output_area.get_rect(topleft = (CUSHION_LEFT,CUSHION_SMALL))
-zone_context_area = pygame.Surface((OUTPUT_W, 100))
+zone_context_area = pygame.Surface((OUTPUT_W - SIDE_BOXES_WH, 100))
 zone_context_rect = zone_context_area.get_rect(topleft = output_rect.bottomleft)
 cal_area = pygame.Surface((OUTPUT_W, 50))
 cal_rect = cal_area.get_rect(topleft = zone_context_rect.bottomleft)
@@ -40,7 +39,8 @@ sidebox2_rect = sidebox2_area.get_rect(topleft = (sidebox_mid_rect.bottomleft[0]
 sidebox_bottom_area = pygame.Surface((SIDE_BOXES_WH, 40))
 sidebox_bottom_rect = sidebox_bottom_area.get_rect(topleft = sidebox2_rect.bottomleft)
 bottomright_area = pygame.Surface((SIDE_BOXES_WH, 100))
-bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_SMALL, HEIGHT - CUSHION_SMALL))
+# bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_SMALL, HEIGHT - CUSHION_SMALL))
+bottomright_rect = bottomright_area.get_rect(topright = (output_rect.bottomright))
 
 # UI Fills -- some are filled in the game loop
 input_area.fill(INPUT_BG)
@@ -171,8 +171,6 @@ while True:
             for l in range(len(command_history)):
                 print_text(command_history[l], font_output, output_area, l)
     
-            output_line += 2
-            
             #  Want to refresh fill and print on room change, but this generally works
             # print_text("goblin", font_output, midbox1_area, 0)
             # print_text("human", font_output, midbox1_area, 1)
