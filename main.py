@@ -14,6 +14,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 font_input = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 font_output = pygame.font.Font('font/Molengo-Regular.ttf', 20)
+font_lists = pygame.font.Font('font/Molengo-Regular.ttf', 18)
 pygame.key.set_repeat(200, 25)
 day = 1
 
@@ -28,29 +29,29 @@ status_area = pygame.Surface((OUTPUT_W, 50))
 status_rect = status_area.get_rect(topleft = (cal_rect.bottomleft))
 input_area = pygame.Surface((INPUT_W, INPUT_H))
 input_text_rect = input_area.get_rect(bottomleft = (CUSHION_LEFT, HEIGHT - CUSHION_SMALL))
-midbox1_area = pygame.Surface((150, 300))
-midbox1_rect = midbox1_area.get_rect(topleft = (output_rect.topright[0]+30, CUSHION_SMALL))
+midbox1_area = pygame.Surface((180, 300))
+midbox1_rect = midbox1_area.get_rect(topleft = (output_rect.topright[0]+10, CUSHION_SMALL))
 sidebox1_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
 sidebox1_rect = sidebox1_area.get_rect(topright = (WIDTH - CUSHION_SMALL, CUSHION_SMALL))
-sidebox_mid_area = pygame.Surface((SIDE_BOXES_WH, 40))
-sidebox_mid_rect = sidebox_mid_area.get_rect(topleft = sidebox1_rect.bottomleft)
+sidebox1_buttons = pygame.Surface((SIDE_BOXES_WH, 40))
+sidebox1_buttons_rect = sidebox1_buttons.get_rect(topleft = sidebox1_rect.bottomleft)
 sidebox2_area = pygame.Surface((SIDE_BOXES_WH, SIDE_BOXES_WH))
-sidebox2_rect = sidebox2_area.get_rect(topleft = (sidebox_mid_rect.bottomleft[0], sidebox_mid_rect.bottomleft[1]+20))
-sidebox_bottom_area = pygame.Surface((SIDE_BOXES_WH, 40))
-sidebox_bottom_rect = sidebox_bottom_area.get_rect(topleft = sidebox2_rect.bottomleft)
-bottomright_area = pygame.Surface((SIDE_BOXES_WH, 100))
+sidebox2_rect = sidebox2_area.get_rect(topleft = (sidebox1_buttons_rect.bottomleft[0], sidebox1_buttons_rect.bottomleft[1]+20))
+sidebox2_buttons = pygame.Surface((SIDE_BOXES_WH, 40))
+sidebox2_buttons_rect = sidebox2_buttons.get_rect(topleft = sidebox2_rect.bottomleft)
+command_palette_area = pygame.Surface((SIDE_BOXES_WH, 100))
 # bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_SMALL, HEIGHT - CUSHION_SMALL))
-bottomright_rect = bottomright_area.get_rect(topright = (output_rect.bottomright))
+command_palette_rect = command_palette_area.get_rect(topright = (output_rect.bottomright))
 
 # UI Fills -- some are filled in the game loop
 input_area.fill(INPUT_BG)
 output_area.fill(OUTPUT_BG)
 sidebox1_area.fill(SIDEBOX1_BG)
 sidebox2_area.fill(SIDEBOX2_BG)
-sidebox_mid_area.fill(BLACK)
-sidebox_bottom_area.fill(BLACK)
+sidebox1_buttons.fill(BLACK)
+sidebox2_buttons.fill(BLACK)
 midbox1_area.fill('lightgray')
-bottomright_area.fill(BOTTOMRIGHT_BG)
+command_palette_area.fill(BOTTOMRIGHT_BG)
 output_area.fill(OUTPUT_BG)
 zone_context_area.fill('aquamarine3')
 # status_area.fill('bisque3')
@@ -84,14 +85,14 @@ castle_surf = pygame.image.load(os.path.join('graphics/other', 'castle_sm.png'))
 castle_rect = castle_surf.get_rect(topleft = (0,0))
 
 # Display some entities for testing
-print_text('goblin', font_output, midbox1_area, 0)
-print_text('spooky ghost', font_output, midbox1_area, 1)
-print_text('angry snail', font_output, midbox1_area, 2)
+print_text('goblin', font_lists, midbox1_area, 0)
+print_text('spooky ghost', font_lists, midbox1_area, 1)
+print_text('angry snail', font_lists, midbox1_area, 2)
 
 # Display some actions for testing, the whole area clicked puts "go " into input for now
-print_text('Go', font_output, bottomright_area, 0)
-print_text('Look', font_output, bottomright_area, 1)
-print_text('Take', font_output, bottomright_area, 2)
+print_text('Go', font_output, command_palette_area, 0)
+print_text('Look', font_output, command_palette_area, 1)
+print_text('Take', font_output, command_palette_area, 2)
 
 while True:
     events = pygame.event.get()
@@ -101,7 +102,7 @@ while True:
     
     if input_text_rect.collidepoint(mouse_pos):
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_IBEAM)
-    elif bottomright_rect.collidepoint(mouse_pos):
+    elif command_palette_rect.collidepoint(mouse_pos):
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
     else:
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_CROSSHAIR)
@@ -114,10 +115,10 @@ while True:
     screen.blit(input_area, input_text_rect)
     screen.blit(sidebox1_area, sidebox1_rect)
     screen.blit(sidebox2_area, sidebox2_rect)
-    screen.blit(sidebox_mid_area, sidebox_mid_rect)
-    screen.blit(sidebox_bottom_area, sidebox_bottom_rect)
+    screen.blit(sidebox1_buttons, sidebox1_buttons_rect)
+    screen.blit(sidebox2_buttons, sidebox2_buttons_rect)
     screen.blit(midbox1_area, midbox1_rect)
-    screen.blit(bottomright_area, bottomright_rect)
+    screen.blit(command_palette_area, command_palette_rect)
     screen.blit(flower_surface, (flower_x_pos, flower_y_pos))
     if flower_y_pos > 200 or flower_y_pos < 30:
         flower_speed *= -1
@@ -176,7 +177,7 @@ while True:
             # print_text("human", font_output, midbox1_area, 1)
             # print_text("spooky ghost", font_output, midbox1_area, 2)
             textinput.value = ""
-        if event.type == pygame.MOUSEBUTTONDOWN and bottomright_rect.collidepoint(mouse_pos):
+        if event.type == pygame.MOUSEBUTTONDOWN and command_palette_rect.collidepoint(mouse_pos):
             textinput.value = "go "
             print(manager.cursor_pos)
             manager.cursor_pos = len(textinput.value)
