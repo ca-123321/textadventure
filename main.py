@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 font_input = pygame.font.Font('font/Molengo-Regular.ttf', 40)
 font_output = pygame.font.Font('font/Molengo-Regular.ttf', 20)
-font_lists = pygame.font.Font('font/Molengo-Regular.ttf', 18)
+font_lists = pygame.font.Font('font/AnticSlab-Regular.ttf', 18)
 pygame.key.set_repeat(200, 25)
 day = 1
 
@@ -40,7 +40,6 @@ sidebox2_rect = sidebox2_area.get_rect(topleft = (sidebox1_buttons_rect.bottomle
 sidebox2_buttons = pygame.Surface((SIDE_BOXES_WH, 40))
 sidebox2_buttons_rect = sidebox2_buttons.get_rect(topleft = sidebox2_rect.bottomleft)
 command_palette_area = pygame.Surface((SIDE_BOXES_WH, 100))
-# bottomright_rect = bottomright_area.get_rect(bottomright = (WIDTH - CUSHION_SMALL, HEIGHT - CUSHION_SMALL))
 command_palette_rect = command_palette_area.get_rect(topright = (output_rect.bottomright))
 
 # UI Fills -- some are filled in the game loop
@@ -54,7 +53,6 @@ midbox1_area.fill('lightgray')
 command_palette_area.fill(BOTTOMRIGHT_BG)
 output_area.fill(OUTPUT_BG)
 zone_context_area.fill('aquamarine3')
-# status_area.fill('bisque3')
 
 # Side animation playing
 flower_surface = pygame.image.load(os.path.join('graphics/other/', 'flower_58.png')).convert_alpha()
